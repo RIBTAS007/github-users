@@ -1,10 +1,13 @@
 ## Starter Project
 
 - we will be using styled components for styling css
+- it uses JS under the hood
+- since the project does not hae much data to manage we can use contextAPI instead of redux
 
 ## Styled Components
 
-[Styled-Components - Main Docs](https://styled-components.com/)
+- You can refer this for details [Styled-Components - Main Docs](https://styled-components.com/)
+- The following is a basic example of how we will be using a styled component
 
 ```jsx
 import styled from "styled-components";
@@ -25,7 +28,8 @@ export default ReactComponent
 
 ## React Icons
 
-[React Icons - Main Docs](https://react-icons.github.io/react-icons/)
+- For icons we will be using [React Icons ](https://react-icons.github.io/react-icons/)
+- This is how we can use it
 
 ```jsx
 import { FiUsers, FiUserPlus } from "react-icons/fi";
@@ -34,10 +38,9 @@ import { FiUsers, FiUserPlus } from "react-icons/fi";
 
 ## React Router Dom
 
-version used - "react-router-dom": "^5.2.0",
-
+- we will be using the following
+- version used - "react-router-dom": "^6.2.2",
 - [react-router-dom - Main Docs](https://reactrouter.com/web/guides/quick-start)
-
 - <Switch> renders the first child <Route> that matches
 - A <Route path="*"> always matches
 
