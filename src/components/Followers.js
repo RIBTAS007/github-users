@@ -1,32 +1,35 @@
 import React from "react";
 import { GithubContext } from "../context/context";
-import styled from "styled-components";
+import styled, { ThemeProvider } from "styled-components";
+import { darkTheme, lightTheme } from "../themes";
 
 const Followers = () => {
-  const { followers } = React.useContext(GithubContext);
+  const { followers, isDarkTheme } = React.useContext(GithubContext);
 
   return (
-    <Wrapper>
-      <div className="followers">
-        {followers.map((follower, index) => {
-          const { avatar_url: img, html_url, login } = follower;
-          return (
-            <article key={index}>
-              <img src={img} alt={login} />
-              <div>
-                <h4>{login}</h4>
-                <a href={html_url}>{html_url}</a>
-              </div>
-            </article>
-          );
-        })}
-      </div>
-    </Wrapper>
+    <ThemeProvider theme={!isDarkTheme ? lightTheme : darkTheme}>
+      <Wrapper>
+        <div className="followers">
+          {followers.map((follower, index) => {
+            const { avatar_url: img, html_url, login } = follower;
+            return (
+              <article key={index}>
+                <img src={img} alt={login} />
+                <div>
+                  <h4>{login}</h4>
+                  <a href={html_url}>{html_url}</a>
+                </div>
+              </article>
+            );
+          })}
+        </div>
+      </Wrapper>
+    </ThemeProvider>
   );
 };
 
 const Wrapper = styled.article`
-  background: var(--clr-white);
+  background: ${(props) => props.theme.body};
   border-top-right-radius: var(--radius);
   border-bottom-left-radius: var(--radius);
   border-bottom-right-radius: var(--radius);
@@ -38,8 +41,8 @@ const Wrapper = styled.article`
     top: 0;
     left: 0;
     transform: translateY(-100%);
-    background: var(--clr-white);
-    color: var(--clr-grey-5);
+    background: ${(props) => props.theme.body};
+    color: ${(props) => props.theme.text};
     border-top-right-radius: var(--radius);
     border-top-left-radius: var(--radius);
     text-transform: capitalize;
@@ -71,9 +74,10 @@ const Wrapper = styled.article`
     }
     h4 {
       margin-bottom: 0;
+      color: ${(props) => props.theme.text};
     }
     a {
-      color: var(--clr-grey-5);
+      color: ${(props) => props.theme.link};
     }
   }
 `;

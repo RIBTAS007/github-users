@@ -1,10 +1,12 @@
 import React from "react";
-import styled from "styled-components";
+import styled, { ThemeProvider } from "styled-components";
 import { MdSearch } from "react-icons/md";
 import { GithubContext } from "../context/context";
+import { darkTheme, lightTheme } from "../themes";
+
 const Search = () => {
   const [user, setUser] = React.useState("");
-  const { request, error, searchGithubUser, isLoading } =
+  const { request, error, searchGithubUser, isLoading, isDarkTheme } =
     React.useContext(GithubContext);
 
   const handleSubmit = (e) => {
@@ -15,26 +17,30 @@ const Search = () => {
   };
   return (
     <section className="section">
-      <Wrapper className="section-center">
-        {error.show && (
-          <ErrorWrapper>
-            <p>{error.msg}</p>
-          </ErrorWrapper>
-        )}
-        <form onSubmit={handleSubmit}>
-          <div className="form-control">
-            <MdSearch />
-            <input
-              type="text"
-              placeholder="Enter Github User"
-              value={user}
-              onChange={(e) => setUser(e.target.value)}
-            />
-            {request > 0 && !isLoading && <button type="submit">search</button>}
-          </div>
-        </form>
-        <h3>requests: {request}/60</h3>
-      </Wrapper>
+      <ThemeProvider theme={!isDarkTheme ? lightTheme : darkTheme}>
+        <Wrapper className="section-center">
+          {error.show && (
+            <ErrorWrapper>
+              <p>{error.msg}</p>
+            </ErrorWrapper>
+          )}
+          <form onSubmit={handleSubmit}>
+            <div className="form-control">
+              <MdSearch />
+              <input
+                type="text"
+                placeholder="Enter Github User"
+                value={user}
+                onChange={(e) => setUser(e.target.value)}
+              />
+              {request > 0 && !isLoading && (
+                <button type="submit">search</button>
+              )}
+            </div>
+          </form>
+          <h3>requests: {request}/60</h3>
+        </Wrapper>
+      </ThemeProvider>
     </section>
   );
 };
@@ -48,6 +54,7 @@ const Wrapper = styled.div`
     align-items: center;
     h3 {
       padding: 0 0.5rem;
+      color: ${(props) => props.theme.link};
     }
   }
   .form-control {
@@ -87,7 +94,7 @@ const Wrapper = styled.div`
     }
 
     svg {
-      color: var(--clr-grey-5);
+      ${(props) => props.theme.link};
     }
     input,
     button,
@@ -104,7 +111,7 @@ const Wrapper = styled.div`
   }
   h3 {
     margin-bottom: 0;
-    color: var(--clr-grey-5);
+    color: ${(props) => props.theme.link};
     font-weight: 400;
   }
 `;

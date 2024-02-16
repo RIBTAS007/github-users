@@ -1,9 +1,12 @@
 import React from "react";
 import { GithubContext } from "../context/context";
-import styled from "styled-components";
+import styled, { ThemeProvider } from "styled-components";
 import { MdBusiness, MdLocationOn, MdLink } from "react-icons/md";
+import { FaTwitter } from "react-icons/fa";
+import { darkTheme, lightTheme } from "../themes";
+
 const Card = () => {
-  const { githubUser } = React.useContext(GithubContext);
+  const { githubUser, isDarkTheme } = React.useContext(GithubContext);
   const {
     avatar_url,
     html_url,
@@ -15,34 +18,48 @@ const Card = () => {
     twitter_username,
   } = githubUser;
   return (
-    <Wrapper>
-      <header>
-        <img src={avatar_url} alt={name} />
-        <div>
-          <h4>{name}</h4>
-          <p>@{twitter_username || "lucifer"}</p>
+    <ThemeProvider theme={!isDarkTheme ? lightTheme : darkTheme}>
+      <Wrapper>
+        <header>
+          <img src={avatar_url} alt={name} />
+          <div>
+            <h4>{name}</h4>
+
+            <p>
+              {twitter_username ? (
+                <FaTwitter style={{ marginRight: "0.5rem" }} />
+              ) : (
+                ""
+              )}{" "}
+              @{twitter_username || ""}
+            </p>
+          </div>
+          <a href={html_url}>follow</a>
+        </header>
+        <p className="bio">{bio}</p>
+        <div className="links">
+          <p>
+            <MdBusiness></MdBusiness>
+            {company}
+          </p>
+          <p>
+            <MdLocationOn></MdLocationOn>
+            {location || "earth"}
+          </p>
+          <p>
+            <a href={`https://${blog}`}>
+              {" "}
+              <MdLink></MdLink> {blog}
+            </a>
+          </p>
         </div>
-        <a href={html_url}>follow</a>
-      </header>
-      <p className="bio">{bio}</p>
-      <div className="links">
-        <p>
-          <MdBusiness></MdBusiness>
-          {company}
-        </p>
-        <p>
-          <MdLocationOn></MdLocationOn>
-          {location || "earth"}
-        </p>
-        <a href={`https://${blog}`}>
-          <MdLink></MdLink> {blog}
-        </a>
-      </div>
-    </Wrapper>
+      </Wrapper>
+    </ThemeProvider>
   );
 };
 const Wrapper = styled.article`
-  background: var(--clr-white);
+  background: ${(props) => props.theme.body};
+  color: ${(props) => props.theme.text};
   padding: 1.5rem 2rem;
   border-top-right-radius: var(--radius);
   border-bottom-left-radius: var(--radius);
@@ -54,8 +71,8 @@ const Wrapper = styled.article`
     top: 0;
     left: 0;
     transform: translateY(-100%);
-    background: var(--clr-white);
-    color: var(--clr-grey-5);
+    background: ${(props) => props.theme.body};
+    color: ${(props) => props.theme.text};
     border-top-right-radius: var(--radius);
     border-top-left-radius: var(--radius);
     text-transform: capitalize;
@@ -79,10 +96,14 @@ const Wrapper = styled.article`
     }
     p {
       margin-bottom: 0;
+      color: ${(props) => props.theme.link};
+      display: flex;
+      align-items: center;
     }
     a {
-      color: var(--clr-primary-5);
-      border: 1px solid var(--clr-primary-5);
+      color: ${(props) => props.theme.link};
+      border: 1px solid ${(props) => props.theme.link};
+
       padding: 0.25rem 0.75rem;
       border-radius: 1rem;
       text-transform: capitalize;
@@ -90,18 +111,19 @@ const Wrapper = styled.article`
       transition: var(--transition);
       cursor: pointer;
       &:hover {
-        background: var(--clr-primary-5);
-        color: var(--clr-white);
+        background: ${(props) => props.theme.button};
+        color: ${(props) => props.theme.text};
       }
     }
   }
   .bio {
-    color: var(--clr-grey-3);
+    color: ${(props) => props.theme.text};
   }
   .links {
     p,
     a {
       margin-bottom: 0.25rem;
+      color: ${(props) => props.theme.link};
       display: flex;
       align-items: center;
       svg {
@@ -110,13 +132,13 @@ const Wrapper = styled.article`
       }
     }
     a {
-      color: var(--clr-primary-5);
+      color: ${(props) => props.theme.link};
       transition: var(--transition);
       svg {
-        color: var(--clr-grey-5);
+        color: ${(props) => props.theme.svgColor};
       }
       &:hover {
-        color: var(--clr-primary-3);
+        color: ${(props) => props.theme.svgHoverColor};
       }
     }
   }

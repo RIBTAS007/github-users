@@ -1,11 +1,12 @@
 import React from "react";
 import { GithubContext } from "../context/context";
-import styled from "styled-components";
+import styled, { ThemeProvider } from "styled-components";
 import { GoRepo, GoGist } from "react-icons/go";
 import { FiUsers, FiUserPlus } from "react-icons/fi";
+import { lightTheme, darkTheme } from "../themes";
 
 const UserInfo = () => {
-  const { githubUser } = React.useContext(GithubContext);
+  const { isDarkTheme, githubUser } = React.useContext(GithubContext);
   const { public_repos, followers, following, public_gists } = githubUser;
 
   const items = [
@@ -40,11 +41,13 @@ const UserInfo = () => {
   ];
   return (
     <section className="section">
-      <Wrapper className="section-center">
-        {items.map((item) => {
-          return <Item key={item.id} {...item} />;
-        })}
-      </Wrapper>
+      <ThemeProvider theme={!isDarkTheme ? lightTheme : darkTheme}>
+        <Wrapper className="section-center">
+          {items.map((item) => {
+            return <Item key={item.id} {...item} />;
+          })}
+        </Wrapper>
+      </ThemeProvider>
     </section>
   );
 };
@@ -71,7 +74,8 @@ const Wrapper = styled.section`
   .item {
     border-radius: var(--radius);
     padding: 1rem 2rem;
-    background: var(--clr-white);
+    background: ${(props) => props.theme.body};
+    color: ${(props) => props.theme.text};
     display: grid;
     grid-template-columns: auto 1fr;
     column-gap: 3rem;
@@ -93,6 +97,7 @@ const Wrapper = styled.section`
     p {
       margin-bottom: 0;
       text-transform: capitalize;
+      color: ${(props) => props.theme.link};
     }
     .pink {
       background: #ffe0f0;

@@ -9,12 +9,17 @@ const rootUrl = "https://api.github.com";
 const GithubContext = React.createContext();
 
 const GithubProvider = ({ children }) => {
+  const [isDarkTheme, setIsDarkTheme] = useState(false);
   const [githubUser, setGithubUser] = useState(mockUser);
   const [repos, setRepos] = useState(mockRepos);
   const [followers, setFollowers] = useState(mockFollowers);
   const [request, setRequests] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState({ show: false, msg: "" });
+
+  const onDarkTheme = () => {
+    setIsDarkTheme(!isDarkTheme);
+  };
 
   const searchGithubUser = async (user) => {
     toggleError();
@@ -80,6 +85,8 @@ const GithubProvider = ({ children }) => {
         error,
         searchGithubUser,
         isLoading,
+        onDarkTheme,
+        isDarkTheme,
       }}
     >
       {children}
