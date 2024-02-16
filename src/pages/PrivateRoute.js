@@ -1,8 +1,33 @@
-import React from 'react';
-import { Route, Redirect } from 'react-router-dom';
-import { useAuth0 } from '@auth0/auth0-react';
+import React from "react";
+import { Route, Navigate } from "react-router-dom";
 
-const PrivateRoute = () => {
-  return <h2>private route component</h2>;
-};
-export default PrivateRoute;
+import AppLayout from "../components/AppLayout";
+import Error from "./Error";
+import Dashboard from "./Dashboard";
+
+// const PrivateRoute = ({ children, ...rest }) => {
+//   const isUser = true;
+//   return (
+//     <Route
+//       {...rest}
+//       element={isUser ? children : <Navigate to="/login" replace />}
+//     />
+//   );
+// };
+
+// const PrivateRoute = ({ children, ...rest }) => {
+//   const isUser = true;
+//   return isUser ? children : <Navigate to="/login" />;
+// };
+// export default PrivateRoute;
+
+export default function privateRoute() {
+  return {
+    element: <AppLayout />,
+    errorElement: <Error />,
+    children: [
+      { path: "/", element: <Dashboard />, errorElement: <Error /> },
+      { path: "*", element: <Navigate to="/" replace /> },
+    ],
+  };
+}

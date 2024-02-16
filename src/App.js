@@ -1,47 +1,22 @@
 import React from "react";
-import { Dashboard, Login, Error } from "./pages";
+import { AuthWrapper } from "./pages";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
-import AppLayout from "./components/AppLayout";
-
-// const router = createBrowserRouter([
-//   {
-//     element: <AppLayout />,
-//     errorElement: <Error />,
-//     routes: [
-//       {
-//         path: "/",
-//         element: <Dashboard />,
-//       },
-//       {
-//         path: "/login",
-//         element: <Login />,
-//       },
-//     ],
-//   },
-// ]);
-
-const router = createBrowserRouter([
-  {
-    element: <AppLayout />,
-    errorElement: <Error />,
-
-    children: [
-      {
-        path: "/",
-        element: <Dashboard />,
-        errorElement: <Error />,
-      },
-      {
-        path: "/login",
-        element: <Login />,
-        errorElement: <Error />,
-      },
-    ],
-  },
-]);
+import { useAuth0 } from "@auth0/auth0-react";
+import privateRoute from "./pages/PrivateRoute";
+import publicRoute from "./pages/PublicRoute";
 
 function App() {
-  return <RouterProvider router={router} />;
+  const { isAuthenticated, user } = useAuth0();
+  const isUser = isAuthenticated && user;
+  const router = createBrowserRouter([
+    isUser ? privateRoute() : {},
+    ...publicRoute(),
+  ]);
+  return (
+    <AuthWrapper>
+      <RouterProvider router={router} />
+    </AuthWrapper>
+  );
 }
 
 export default App;
