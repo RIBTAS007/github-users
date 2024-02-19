@@ -12,10 +12,10 @@
 
 ## App View
 
-- [Login Page](./src/images/t1.png)
-- [screen1](./src/images/t2.png)
-- [screenpart2](./src/images/t3.png)
-- [screenpart4](./src/images/t4.png)
+- ![Login Page](./src/images/t1.png)
+- ![screen1](./src/images/t2.png)
+- ![screenpart2](./src/images/t3.png)
+- ![screenpart4](./src/images/t4.png)
 
 ## Tech Stack
 
