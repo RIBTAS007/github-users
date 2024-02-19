@@ -1,8 +1,31 @@
-## Starter Project
+## Glimpse Git
 
-- we will be using styled components for styling css
-- it uses JS under the hood
-- since the project does not hae much data to manage we can use contextAPI instead of redux
+- An App that highlights your github stats
+
+## Features
+
+- AuthO authentication to show app content.
+- fethes data from Github API and shows results
+- Displays the stats in the form of various graphs
+- you can search a user based on their github user names
+- Dark mode and light mode theme
+
+## App View
+
+- [Login Page](./src/images/t1.png)
+- [screen1](./src/images/t2.png)
+- [screenpart2](./src/images/t3.png)
+- [screenpart4](./src/images/t4.png)
+
+## Tech Stack
+
+- [Styled-Components](https://styled-components.com/)
+- [React.js](https://react.dev/)
+- [React Router](https://reactrouter.com/en/main)
+- [Auth0](https://auth0.com/)
+- [Github API](https://api.github.com)
+- [React Icons ](https://react-icons.github.io/react-icons/)
+- [Fusion Charts - Main Docs](https://www.fusioncharts.com/)
 
 ## Styled Components
 
